@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "hoodie-negro",
+    "name": "Hoodie negro",
+    "description": "Buzo con capucha y estampado verde en la espalda.",
+    "price_cop": 150000,
+    "audiences": ["mujer", "hombre"],
+    "image_file": "hoodie-negro-estampado-verde.jpeg",
+    "image_alt": "Hoodie negro con un estampado verde en la espalda"
+  },
+  {
+    "slug": "chaqueta-negra",
+    "name": "Chaqueta negra",
+    "description": "Chaqueta negra con cierre y parches en contraste.",
+    "price_cop": 130000,
+    "audiences": ["mujer", "hombre"],
+    "image_file": "chaqueta-negra-con-parches.jpeg",
+    "image_alt": "Chaqueta negra de cierre frontal con parches blancos"
+  },
+  {
+    "slug": "gargantilla",
+    "name": "Gargantilla",
+    "description": "Gargantilla negra con aros y cadenas.",
+    "price_cop": 70000,
+    "audiences": ["mujer"],
+    "image_file": "gargantilla-negra-con-aros-y-cadenas.jpeg",
+    "image_alt": "Detalle de la gargantilla negra con aros y cadenas metálicas"
+  },
+  {
+    "slug": "guantes",
+    "name": "Guantes sin dedos",
+    "description": "Guantes negros sin dedos con aberturas en el dorso.",
+    "price_cop": 50000,
+    "audiences": ["mujer", "hombre"],
+    "image_file": "guantes-negros-sin-dedos.jpeg",
+    "image_alt": "Un par de guantes negros sin dedos sobre un fondo verde"
+  }
+]

@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import '../styles/editorial.css';
+import portada from '../assets/editorial/portada-grupo-contraluz.jpeg';
+import mujer from '../assets/editorial/editorial-grupo-con-gafas.jpeg';
+import hombre from '../assets/editorial/editorial-retrato-grupal.jpeg';
+
+const colecciones = [
+  { name: 'Mujer', slug: 'mujer', image: mujer },
+  { name: 'Hombre', slug: 'hombre', image: hombre },
+];
+---
+
+<SiteLayout>
+  <div class="site-width home">
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="hero-text">
+        <h1 id="home-title">Viste tu propio <em>universo.</em></h1>
+        <p>Ropa que rompe límites para mentes sin fronteras.</p>
+        <a class="button" href="/tienda/">Explora la colección <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-shot">
+        <Image
+          src={portada}
+          alt="Grupo con ropa oscura en una fotografía en blanco y negro"
+          widths={[320, 480, 570]}
+          sizes="(max-width: 760px) 100vw, 55vw"
+          format="webp"
+          priority
+        />
+        <span class="flare hero-flare" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <section class="collections" aria-labelledby="collections-title">
+      <div class="section-head">
+        <h2 id="collections-title">Colecciones</h2>
+        <a class="text-link" href="/tienda/">Ver todo <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="collections-grid">
+        {colecciones.map(({ name, slug, image }) => (
+          <a class="collection-card" href={`/tienda/?categoria=${slug}`}>
+            <Image src={image} alt="" format="webp" />
+            <span class="collection-name">{name} <span aria-hidden="true">↗</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</SiteLayout>

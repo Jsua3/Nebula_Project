@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import '../styles/editorial.css';
+import foto1 from '../assets/editorial/contacto-editorial-01.jpeg';
+import foto2 from '../assets/editorial/contacto-editorial-02.jpeg';
+import foto3 from '../assets/editorial/contacto-editorial-03.jpeg';
+import { site } from '../lib/site';
+
+const instagramHandle = new URL(site.instagram).pathname.split('/')[1];
+---
+
+<SiteLayout title="Contacto" description="Comunícate con Nébula para consultar productos o recibir ayuda con un pedido.">
+  <section class="site-width editorial-page contact-page" aria-labelledby="contact-title">
+    <div class="editorial-copy">
+      <h1 id="contact-title" class="editorial-title">Hablemos de tu <em>universo.</em></h1>
+      <p>¿Tienes alguna pregunta sobre nuestros productos o necesitas ayuda con tu pedido? Escríbenos y hagamos contacto.</p>
+      <div class="contact-methods">
+        <a class="contact-method" href={site.instagram} target="_blank" rel="noopener noreferrer">
+          <span><strong>Instagram</strong><small>@{instagramHandle}</small></span><span aria-hidden="true">↗</span>
+        </a>
+        {site.email && (
+          <a class="contact-method" href={`mailto:${site.email}`}>
+            <span><strong>Correo electrónico</strong><small>{site.email}</small></span><span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+    </div>
+    <div class="contact-collage" aria-hidden="true">
+      <Image src={foto1} alt="" format="webp" loading="eager" />
+      <Image src={foto2} alt="" format="webp" loading="eager" />
+      <Image src={foto3} alt="" format="webp" loading="eager" />
+      <span class="flare" aria-hidden="true"></span>
+    </div>
+  </section>
+</SiteLayout>

@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/SiteLayout.astro';
+import { formatPrice, getProducts } from '../lib/catalog';
+import { site } from '../lib/site';
+import '../styles/store.css';
+
+const products = await getProducts();
+const categories = [
+  { value: '', label: 'Todo' },
+  { value: 'mujer', label: 'Mujer' },
+  { value: 'hombre', label: 'Hombre' },
+];
+const labels = { mujer: 'Mujer', hombre: 'Hombre' };
+---
+
+<Layout title="Tienda" description="Explora la colección de ropa y accesorios Nébula.">
+  <div class="nebula-store site-width" data-store>
+    <header class="store-intro">
+      <div>
+        <h1>Tienda</h1>
+        <p>Viste diferente. Sé tú mismo.</p>
+      </div>
+      <span class="store-star" aria-hidden="true"></span>
+    </header>
+
+    <form class="store-controls" action="/tienda/" method="get" data-store-controls hidden>
+      <fieldset>
+        <legend class="store-sr-only">Filtrar la colección</legend>
+        {categories.map(({ value, label }) => (
+          <label class="store-filter">
+            <input type="radio" name="categoria" value={value} checked={value === ''} />
+            <span>{label}</span>
+          </label>
+        ))}
+      </fieldset>
+      <label class="store-search">
+        <span class="store-sr-only">Buscar en la colección</span>
+        <input type="search" name="buscar" placeholder="Buscar en la colección" autocomplete="off" maxlength="80" />
+      </label>
+    </form>
+
+    <p class="store-sr-only" role="status" data-search-status></p>
+    <noscript>
+      <p class="store-empty">Activa JavaScript para filtrar la colección y preparar una consulta.</p>
+    </noscript>
+
+    <div class="store-grid">
+      {products.map((product) => (
+        <article
+          class="store-product"
+          data-product
+          data-id={product.id}
+          data-name={product.name}
+          data-search={`${product.name} ${product.description}`}
+          data-price={product.price}
+          data-audiences={product.audiences.join(' ')}
+        >
+          <div class="store-product-image">
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              format="webp"
+              widths={Array.from(new Set([240, 480, 640].map((width) => Math.min(width, product.image.width))))}
+              sizes="(max-width: 560px) 90vw, (max-width: 980px) 44vw, 24vw"
+            />
+          </div>
+          <div class="store-product-body">
+            <p class="store-audiences">{product.audiences.map((audience) => labels[audience]).join(' / ')}</p>
+            <h2>{product.name}</h2>
+            <p class="store-description">{product.description}</p>
+            <div class="store-product-actions">
+              <p class="store-price">{formatPrice(product.price)}</p>
+              <button
+                type="button"
+                class="store-button store-add"
+                data-add-product
+                aria-label={`Añadir ${product.name} a la bolsa`}
+                hidden
+              >
+                Añadir <span aria-hidden="true">+</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="store-empty" data-search-empty hidden>No encontramos piezas con estos filtros.</p>
+    {products.length === 0 && <p class="store-empty" data-catalog-empty>Pronto publicaremos nuevas piezas.</p>}
+
+    <section class="store-bag" id="bolsa" aria-labelledby="bag-title" tabindex="-1" data-bag data-email={site.email} hidden>
+      <h2 id="bag-title" tabindex="-1">Tu bolsa</h2>
+      <p class="store-empty" data-bag-empty>Agrega una pieza para preparar una consulta.</p>
+      <div data-bag-content hidden>
+        <ul class="store-bag-items" data-bag-items></ul>
+        <div class="store-bag-total">
+          <span>Subtotal</span>
+          <strong data-bag-total></strong>
+        </div>
+        <div class="store-bag-actions">
+          <button type="button" class="store-button store-button-primary" data-copy-bag>Copiar consulta</button>
+          {site.instagram && <a class="store-button" href={site.instagram} target="_blank" rel="noopener noreferrer">Abrir Instagram <span aria-hidden="true">↗</span></a>}
+          {site.email && <a class="store-button" href={`mailto:${site.email}`} data-email-bag>Consultar por correo</a>}
+          {!site.instagram && !site.email && <a class="store-button" href="/contacto/">Ver contacto</a>}
+        </div>
+        <label class="store-bag-fallback" data-bag-fallback hidden>
+          <span>Selecciona el texto para copiarlo.</span>
+          <textarea readonly rows="5" data-bag-text></textarea>
+        </label>
+      </div>
+      <template data-bag-row>
+        <li class="store-bag-item">
+          <div>
+            <p class="store-bag-item-name" data-item-name></p>
+            <p class="store-bag-item-total" data-item-total></p>
+          </div>
+          <div class="store-quantity">
+            <button type="button" data-bag-action="subtract">−</button>
+            <span data-item-quantity></span>
+            <button type="button" data-bag-action="add">+</button>
+          </div>
+          <button type="button" class="store-remove" data-bag-action="remove">Quitar</button>
+        </li>
+      </template>
+    </section>
+    <p class="store-sr-only" role="status" data-bag-status></p>
+  </div>
+</Layout>
+
+<script>
+  import '../scripts/store';
+</script>

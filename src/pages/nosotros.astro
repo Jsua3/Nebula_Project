@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import '../styles/editorial.css';
+import editorial from '../assets/editorial/editorial-modelo-con-botas.jpeg';
+---
+
+<SiteLayout title="Nosotros" description="Conoce Nébula, una marca de ropa holgada y estilo alternativo.">
+  <section class="site-width editorial-page about-page" aria-labelledby="about-title">
+    <div class="editorial-copy">
+      <h1 id="about-title" class="editorial-title">¿Quiénes <em>somos?</em></h1>
+      <p>En Nébula creemos que la moda es una forma de expresar quién eres sin necesidad de decir una palabra.</p>
+      <p>Somos una marca de ropa holgada con un estilo alternativo, creativo y auténtico, diseñada para quienes buscan salir de lo convencional y convertir su forma de vestir en una expresión de su personalidad.</p>
+      <a class="text-link" href="/tienda/">Explora la colección <span aria-hidden="true">↗</span></a>
+    </div>
+    <figure class="about-shot">
+      <Image
+        src={editorial}
+        alt="Modelo con botas negras de plataforma en una fotografía en blanco y negro"
+        widths={[360, 560, 735]}
+        sizes="(max-width: 760px) 100vw, 47vw"
+        format="webp"
+        priority
+      />
+      <span class="flare" aria-hidden="true"></span>
+    </figure>
+  </section>
+</SiteLayout>
